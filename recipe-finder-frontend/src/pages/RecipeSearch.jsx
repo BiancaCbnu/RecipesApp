@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { recipeService } from '../services/api.js'; // Ensure this path is correct
 import RecipeCard from '../components/RecipeCard.jsx'; // Ensure this path is correct
+import Notification from '../components/Notification.jsx'; // Added Notification import
 import '../styles/RecipeSearch.css'; // Ensure this path is correct
 
 const RecipeSearch = () => {
@@ -18,6 +19,9 @@ const RecipeSearch = () => {
 
     const [searchedOnce, setSearchedOnce] = useState(false);
     const [initialFiltersLoading, setInitialFiltersLoading] = useState(true);
+
+    // Added notification state
+    const [notification, setNotification] = useState({ message: '', type: '' });
 
     useEffect(() => {
         const fetchFilterOptions = async () => {
@@ -163,6 +167,29 @@ const RecipeSearch = () => {
         searchRecipes();
     };
 
+    // Added handler for meal plan additions
+    const handleMealPlanChange = (status) => {
+        if (status.success) {
+            setNotification({ message: status.message || 'Recipe added to meal plan!', type: 'success' });
+        } else {
+            setNotification({ message: status.message || 'Failed to add to meal plan.', type: 'error' });
+        }
+    };
+
+    // Added handler for favorite changes to match the Home component
+    const handleFavoriteChange = (status) => {
+        if (status.success) {
+            setNotification({ message: status.message, type: 'success' });
+        } else {
+            setNotification({ message: status.message || 'An error occurred.', type: 'error' });
+        }
+    };
+
+    // Added handler to close notification
+    const handleCloseNotification = () => {
+        setNotification({ message: '', type: '' });
+    };
+
     if (initialFiltersLoading) {
         return (
             <div className="loading-container">
@@ -246,11 +273,21 @@ const RecipeSearch = () => {
                                 recipe={recipe} // This recipe object is now potentially enriched
                                 // showIngredients if it's an ingredient search and the recipe has calculated these fields
                                 showIngredients={searchType === 'ingredients' && !!(recipe.usedIngredients || recipe.missedIngredients)}
+                                onFavoriteChange={handleFavoriteChange}
+                                onMealPlanChange={handleMealPlanChange}
                             />
                         ))}
                     </div>
                 </div>
             )}
+
+            {/* Add Notification component */}
+            <Notification
+                message={notification.message}
+                type={notification.type}
+                duration={3000}
+                onClose={handleCloseNotification}
+            />
         </div>
     );
 };
