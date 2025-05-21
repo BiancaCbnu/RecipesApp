@@ -1,0 +1,72 @@
+/* src/styles/ConfirmationModal.css */
+.confirmation-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.confirmation-modal-content {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    animation: fadeInModal 0.3s ease-out;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.confirmation-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.4rem;
+}
+
+.confirmation-modal-content p {
+    margin-bottom: 25px;
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.confirmation-modal-actions {
+    display: flex;
+    justify-content: space-evenly; /* Or center, or space-between */
+    gap: 15px;
+}
+
+/* Re-using .btn styles from your global or page styles, but can be specific */
+.confirmation-modal-actions .btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    flex-grow: 1; /* Make buttons take equal space if needed */
+}
+
+.confirmation-modal-actions .btn.btn-secondary {
+    background-color: #6c757d; /* Default secondary from your previous styles */
+    color: white;
+}
+.confirmation-modal-actions .btn.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.confirmation-modal-actions .btn.btn-danger {
+    background-color: #dc3545; /* Bootstrap danger red */
+    color: white;
+}
+.confirmation-modal-actions .btn.btn-danger:hover {
+    background-color: #c82333;
+}

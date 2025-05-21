@@ -1,0 +1,701 @@
+/* Enhanced Home Page Styles */
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  background-color: #f9f9ff;
+}
+
+/* Animated Gradient Background */
+.animated-gradient {
+  background: linear-gradient(
+    135deg, 
+    rgba(102, 126, 234, 0.95) 0%, 
+    rgba(118, 75, 162, 0.95) 50%,
+    rgba(102, 126, 234, 0.95) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+  color: white;
+  padding: 70px 30px;
+  border-radius: 24px;
+  text-align: center;
+  margin-bottom: 40px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Decorative elements for hero */
+.hero-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  animation: float 8s infinite ease-in-out;
+}
+
+.c1 {
+  width: 200px;
+  height: 200px;
+  top: -100px;
+  right: -70px;
+  animation-delay: 0s;
+}
+
+.c2 {
+  width: 150px;
+  height: 150px;
+  bottom: -50px;
+  left: 10%;
+  animation-delay: 2s;
+}
+
+.c3 {
+  width: 100px;
+  height: 100px;
+  top: 30%;
+  right: 20%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  opacity: 0.95;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button.primary {
+  background: white;
+  color: #667eea;
+}
+
+.cta-button.primary:hover {
+  background: #f8f9ff;
+  color: #5a6fd8;
+}
+
+.cta-button.secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.cta-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Glass Card Effect */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Stats Section */
+.dashboard-stats {
+  margin-bottom: 50px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  padding: 30px 25px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+}
+
+.stat-content h3 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.counter {
+  display: inline-block;
+  animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-content p {
+  margin: 5px 0 10px 0;
+  color: #718096;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.stat-link {
+  font-size: 0.8rem;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  padding: 4px 0;
+  position: relative;
+}
+
+.stat-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #667eea;
+  transition: width 0.3s ease;
+}
+
+.stat-link:hover::after {
+  width: 100%;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 20px 25px;
+  border-radius: 16px;
+}
+
+.section-header h2 {
+  color: #2d3748;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  position: relative;
+  padding-left: 15px;
+}
+
+.section-header h2::before {
+  content: '';
+  position: absolute;
+  height: 80%;
+  width: 4px;
+  background: linear-gradient(to bottom, #667eea, #764ba2);
+  left: 0;
+  top: 10%;
+  border-radius: 2px;
+}
+
+.view-all-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.view-all-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.2);
+  color: #5a6fd8;
+}
+
+/* Section Spacing */
+.recent-favorites,
+.featured-recipes,
+.quick-actions,
+.seasonal-section {
+  margin-bottom: 60px;
+}
+
+/* Recipes Grid */
+.recipes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.recipes-grid .recipe-card {
+  flex: 0 0 350px;
+  max-width: 380px;
+  width: 100%;
+  min-width: 280px;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recipes-grid .recipe-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading Skeleton */
+.recipes-skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.skeleton-card {
+  width: 350px;
+  height: 380px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.skeleton-title {
+  width: 80%;
+  height: 28px;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.skeleton-text {
+  width: 90%;
+  height: 16px;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Quick Actions */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.action-card {
+  padding: 35px 25px;
+  border-radius: 20px;
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-icon {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.action-card:hover .action-icon {
+  transform: scale(1.1);
+}
+
+.action-card h3 {
+  color: #2d3748;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.action-card p {
+  color: #718096;
+  margin: 0 0 20px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+.action-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  color: #667eea;
+}
+
+.action-card:hover .action-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+.empty-state h2 {
+  color: #4a5568;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.empty-state p {
+  color: #718096;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.6;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Seasonal Section */
+.seasonal-section {
+  margin-bottom: 50px;
+}
+
+.season-banner {
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.season-content {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(144, 205, 244, 0.8) 0%, rgba(101, 186, 121, 0.8) 100%);
+  color: white;
+}
+
+.season-icon {
+  font-size: 4rem;
+  margin-right: 30px;
+  animation: float 5s infinite ease-in-out;
+}
+
+.season-text {
+  flex: 1;
+}
+
+.season-text h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: white;
+}
+
+.season-text p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(102, 126, 234, 0.2);
+  border-radius: 50%;
+  border-top-color: #667eea;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home {
+    padding: 15px;
+  }
+  
+  .hero {
+    padding: 50px 20px;
+    margin-bottom: 30px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .cta-button {
+    width: 200px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .stat-card {
+    padding: 25px 20px;
+    gap: 15px;
+  }
+  
+  .stat-content h3 {
+    font-size: 2rem;
+  }
+  
+  .recipes-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .recipes-grid .recipe-card {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .actions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 15px 20px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+    padding-left: 0;
+  }
+  
+  .section-header h2::before {
+    height: 4px;
+    width: 40px;
+    left: 50%;
+    top: auto;
+    bottom: -10px;
+    transform: translateX(-50%);
+  }
+  
+  .season-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .season-icon {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+  
+  .welcome-emoji {
+    font-size: 3rem;
+  }
+  
+  .action-icon {
+    font-size: 3rem;
+  }
+  
+  .action-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .empty-icon {
+    font-size: 3.5rem;
+  }
+  
+  .stat-content h3 {
+    font-size: 1.8rem;
+  }
+  
+  .season-text h3 {
+    font-size: 1.5rem;
+  }
+  
+  .season-text p {
+    font-size: 1rem;
+  }
+}

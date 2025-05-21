@@ -1,0 +1,58 @@
+/* src/styles/Notification.css */
+.notification {
+    position: fixed;
+    bottom: 20px; /* Or top: 20px; */
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1050; /* Above modals if needed, or adjust */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 250px;
+    max-width: 400px;
+    animation: slideInNotification 0.4s ease-out, fadeOutNotification 0.4s ease-in forwards ${/* Injected by JS logic for duration */ ''};
+}
+
+@keyframes slideInNotification {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOutNotification {
+    /* This animation will be controlled by JS for timing the fade-out */
+    /* Or, can be triggered by adding a class */
+    /* For simplicity, the component unmounts after duration */
+}
+
+
+.notification-success {
+    background-color: #28a745; /* Green */
+}
+
+.notification-error {
+    background-color: #dc3545; /* Red */
+}
+
+.notification-info {
+    background-color: #17a2b8; /* Teal */
+}
+
+.notification-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-left: 15px;
+    cursor: pointer;
+    opacity: 0.8;
+    padding: 0;
+}
+
+.notification-close-btn:hover {
+    opacity: 1;
+}

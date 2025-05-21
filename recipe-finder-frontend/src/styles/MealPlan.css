@@ -1,0 +1,584 @@
+/* Enhanced Meal Plan Page Styles - Matching Home.css Aesthetic */
+
+:root {
+  /* Base colors from Home.css */
+  --page-bg: #f9f9ff;
+  --accent-blue: #667eea;
+  --accent-purple: #764ba2;
+  --accent-pink: #ff6b6b;
+  --accent-pink-dark: #ff5252;
+  
+  --text-on-dark-bg: #FFFFFF;
+  --text-on-light-bg-dark: #2d3748;
+  --text-on-light-bg-medium: #718096;
+  --text-on-light-bg-light: #a0aec0;
+  
+  --content-bg-white: #FFFFFF;
+  --meal-item-bg: #f8f9fa;
+  --empty-slot-border: #e0e0e0;
+  
+  --border-radius-cards: 20px;
+  --border-radius-small: 10px;
+  --border-radius-buttons: 12px;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.meal-plan-page {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background-color: var(--page-bg);
+}
+
+/* Glass Card Effect - Defined BEFORE animated-gradient */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8); /* This light background will be overridden by .animated-gradient if both classes are present */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: var(--border-radius-cards);
+}
+
+/* Animated Gradient Background - Defined AFTER glass-card */
+/* This ensures its background property takes precedence when an element has both classes */
+.animated-gradient {
+  background: linear-gradient(
+    135deg, 
+    rgba(102, 126, 234, 0.95) 0%, 
+    rgba(118, 75, 162, 0.95) 50%,
+    rgba(102, 126, 234, 0.95) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+  color: white; /* Default text color for elements inside .animated-gradient */
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+.meal-plan-header {
+  text-align: center;
+  margin-bottom: 35px;
+  padding: 40px 30px;
+  position: relative;
+  overflow: hidden;
+  /* It has both 'glass-card' and 'animated-gradient' classes.
+     Due to the CSS order above, 'animated-gradient' background and color will apply. */
+}
+
+.meal-plan-header h1 {
+  color: var(--text-on-dark-bg); /* Explicitly white */
+  margin-bottom: 15px;
+  font-size: 2.6rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.meal-plan-header p {
+  color: var(--text-on-dark-bg); /* Explicitly white */
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  opacity: 0.9;
+}
+
+.welcome-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.week-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.current-week-display {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-on-light-bg-dark); /* Text on this element needs to contrast its own background */
+  padding: 11px 20px;
+  background: var(--content-bg-white); /* Explicitly white background for the date display */
+  border-radius: var(--border-radius-buttons);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  min-width: 280px;
+  text-align: center;
+}
+
+.cta-button {
+  padding: 14px 28px;
+  border-radius: var(--border-radius-buttons);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button.primary {
+  background: var(--accent-pink);
+  color: white;
+}
+
+.cta-button.primary:hover {
+  background: var(--accent-pink-dark);
+}
+
+.cta-button.secondary {
+  background: rgba(255, 255, 255, 0.15); /* Light background for button itself */
+  color: white; /* Text color for button */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px); /* Apply blur if desired on these buttons */
+}
+
+.cta-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn {
+  border: none;
+  padding: 10px 22px;
+  border-radius: var(--border-radius-buttons);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn.btn-primary {
+  background-color: var(--accent-pink);
+  color: var(--text-on-dark-bg);
+}
+
+.btn.btn-primary:hover {
+  background-color: var(--accent-pink-dark);
+}
+
+/* Meal Plan Grid */
+.meal-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.day-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* This element has glass-card, so it gets the light semi-transparent background */
+}
+
+.day-column:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.day-column.today {
+  border: 2px solid var(--accent-pink);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.15);
+}
+
+.day-header {
+  background: var(--accent-purple);
+  color: var(--text-on-dark-bg);
+  padding: 20px 12px;
+  text-align: center;
+  position: relative;
+}
+
+.day-name {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.day-number {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.today-marker {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--accent-pink);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+.meals-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+  background-color: var(--content-bg-white); /* Solid white background for meal list area */
+}
+
+.meal-section {
+  padding-bottom: 15px;
+}
+
+.meal-type-heading {
+  font-size: 0.9rem;
+  color: var(--text-on-light-bg-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--accent-pink);
+  display: inline-block;
+}
+
+.meal-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--meal-item-bg); /* Light background for meal item itself */
+  border-radius: var(--border-radius-small);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* This element has glass-card. Its background will be from .glass-card,
+     unless overridden by a more specific style or if .animated-gradient were also applied */
+}
+
+.meal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.meal-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.meal-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.meal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-title {
+  font-size: 0.95rem;
+  color: var(--text-on-light-bg-dark);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.meal-time {
+  font-size: 0.8rem;
+  color: var(--text-on-light-bg-medium);
+  margin-top: 4px;
+}
+
+.remove-meal-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-on-light-bg-medium);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin-left: 10px;
+  opacity: 0.6;
+}
+
+.remove-meal-btn:hover {
+  background-color: var(--accent-pink);
+  color: white;
+  border-color: var(--accent-pink);
+  opacity: 1;
+}
+
+.remove-meal-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-loading-small {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3); /* For when button is dark */
+  border-top-color: #fff; /* For when button is dark */
+  /* If button background is light, spinner might need different colors */
+  animation: spin 1s linear infinite;
+}
+/* If remove-meal-btn background becomes light on loading, adjust spinner colors */
+.remove-meal-btn:disabled .btn-loading-small {
+  border: 2px solid rgba(0, 0, 0, 0.2); /* Example for light bg */
+  border-top-color: var(--text-on-light-bg-dark); /* Example for light bg */
+}
+
+
+.meal-empty {
+  text-align: center;
+  padding: 20px 10px;
+  color: var(--text-on-light-bg-light);
+  font-style: italic;
+  font-size: 0.9rem;
+  background-color: var(--content-bg-white);
+  border: 1px dashed var(--empty-slot-border);
+  border-radius: var(--border-radius-small);
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty state for the whole week */
+.empty-state-container {
+  text-align: center;
+  padding: 60px 30px;
+  margin: 40px auto;
+  max-width: 600px;
+  /* This element has glass-card, so it gets the light semi-transparent background */
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  animation: pulse 2s infinite ease-in-out;
+  /* Text color will be inherited or should be set if glass-card doesn't define one */
+  color: var(--text-on-light-bg-dark); 
+}
+
+.empty-state-container h2 {
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--text-on-light-bg-dark);
+}
+
+.empty-state-container p {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text-on-light-bg-medium);
+}
+
+/* Loading and Error States */
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  color: var(--text-on-dark-bg); /* Text on animated gradient should be white */
+  text-align: center;
+  padding: 20px;
+  border-radius: var(--border-radius-cards);
+  margin: 50px auto;
+  max-width: 600px;
+  /* These also have animated-gradient class applied in JSX */
+}
+
+.loading-container p, .error-container p {
+  font-size: 1.05rem;
+  margin-top: 10px;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(255,255,255,0.3);
+  border-top: 4px solid var(--text-on-dark-bg); /* White spinner on dark gradient */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container h2 {
+  color: white; /* Text on animated gradient */
+  margin: 10px 0;
+  font-size: 1.8rem;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  /* Color should be fine as it's on animated-gradient */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1600px) {
+  .meal-plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  }
+}
+
+@media (max-width: 1200px) {
+  .meal-plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+  
+  .meal-plan-header h1 {
+    font-size: 2.3rem;
+  }
+  
+  .day-column {
+    min-height: 580px;
+  }
+}
+
+@media (max-width: 992px) {
+  .meal-plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .day-column {
+    min-height: 560px;
+  }
+}
+
+@media (max-width: 768px) {
+  .meal-plan-header h1 {
+    font-size: 2rem;
+  }
+  
+  .meal-plan-header p {
+    font-size: 1rem;
+  }
+  
+  .week-navigation {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .current-week-display {
+    order: -1;
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .cta-button {
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .meal-plan-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  .day-column {
+    min-height: 540px;
+  }
+  
+  .welcome-emoji {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .meal-plan-page {
+    padding: 20px 10px;
+  }
+  
+  .meal-plan-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .day-column {
+    min-height: auto;
+  }
+  
+  .meal-plan-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .meal-plan-header {
+    padding: 30px 20px;
+  }
+}

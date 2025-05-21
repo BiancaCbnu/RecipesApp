@@ -1,0 +1,381 @@
+/* src/styles/RecipeCard.css */
+
+.recipe-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 540px; 
+  width: 100%; 
+  position: relative;
+}
+
+.recipe-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.recipe-image-container {
+  position: relative;
+  width: 100%;
+  height: 220px; 
+  overflow: hidden;
+}
+
+.recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.recipe-card:hover .recipe-image {
+  transform: scale(1.05);
+}
+
+.recipe-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.favorite-btn,
+.meal-plan-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+}
+
+.favorite-btn:hover,
+.meal-plan-btn:hover {
+  background: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-btn.favorited {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+  color: white;
+}
+
+.recipe-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  height: 320px; 
+  justify-content: space-between;
+}
+
+.recipe-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(1.3rem * 1.3 * 2); /* More robust calculation for 2 lines */
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: #718096;
+  background: #f7fafc;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.used-ingredients {
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+  line-height: 1.4; /* Add line height for readability */
+  max-height: 60px; /* Example max height */
+  overflow-y: auto; /* Scroll if content exceeds max height */
+}
+
+.used-ingredients p {
+  margin: 4px 0;
+  color: #4a5568;
+}
+.used-ingredients p:last-child {
+    margin-bottom: 0;
+}
+
+.used-ingredients strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Styles for .recipe-description, .recipe-origin, .recipe-category as in RecipeCard.jsx */
+/* These match the structure from the RecipeCard.jsx you provided earlier */
+.recipe-description-block { /* Assuming you used this wrapper in RecipeCard.jsx */
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 70px; 
+  overflow: hidden;
+}
+
+.recipe-origin { /* From RecipeCard.jsx */
+  color: #444;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recipe-category-tag { /* From RecipeCard.jsx */
+  display: inline-block;
+  align-self: flex-start;
+  background-color: #4CAF50; /* Green example, adjust as needed */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: auto; 
+}
+/* If your RecipeCard.jsx uses different class names for these elements, adjust above */
+
+
+.view-recipe-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 0; /* Full width button, so only vertical padding */
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: auto; 
+  display: block; /* Ensure it takes full width if parent is flex column */
+  width: 100%;
+}
+
+.view-recipe-btn:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive adjustments from your provided RecipeCard.css */
+@media (max-width: 768px) {
+  .recipe-card {
+    height: 510px;
+  }
+  .recipe-image-container {
+    height: 200px;
+  }
+  .recipe-content {
+    padding: 16px;
+    height: 310px;
+  }
+  .recipe-title {
+    font-size: 1.2rem;
+    min-height: calc(1.2rem * 1.3 * 2); /* Adjust for new font size */
+  }
+  .favorite-btn,
+  .meal-plan-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-card {
+    height: 480px;
+  }
+  .recipe-image-container {
+    height: 180px;
+  }
+  .recipe-content {
+    padding: 14px;
+    height: 300px;
+  }
+  .recipe-title {
+    font-size: 1.1rem;
+    min-height: calc(1.1rem * 1.3 * 2); /* Adjust for new font size */
+  }
+  /* Styles for .recipe-description in mobile if needed, 
+     assuming .recipe-description-block handles this */
+}
+
+.recipe-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+  height: 320px; /* From your desired card CSS (total card height 540px - image 220px) */
+  justify-content: space-between; /* This pushes view-recipe-btn to bottom if block above doesn't fill space */
+}
+
+.recipe-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: calc(1.3rem * 1.3 * 2); /* Ensure space for 2 lines */
+}
+
+.recipe-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: #718096;
+  background: #f7fafc;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* This block now holds ingredients OR origin text, and always the category tag */
+.recipe-description-block {
+  flex-grow: 1; /* Crucial: allows this block to take available vertical space */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the start (top) by default */
+  margin-bottom: 12px; /* Space before the view recipe button */
+  overflow: hidden; /* Hide overflow if content is extremely long */
+  min-height: 70px; /* Give it some base height */
+}
+
+.used-ingredients {
+  font-size: 0.85rem; /* Slightly smaller to fit more */
+  color: #4a5568;
+  line-height: 1.5; /* Increased for readability */
+  /* Allow this section to take up available space when shown */
+  /* No margin-bottom here, handled by .recipe-description-block */
+  /* Let it grow as much as needed within the flex parent */
+}
+
+.used-ingredients p {
+  margin: 0 0 6px 0; /* Space between "Uses" and "Missing" lines */
+}
+.used-ingredients p:last-child {
+  margin-bottom: 0;
+}
+
+.used-ingredients strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Origin/Description text (shown when not showing ingredients) */
+.recipe-origin {
+  font-size: 0.9rem;
+  color: #4a5568; /* Matching .used-ingredients text color */
+  line-height: 1.4;
+  /* Allow it to take space, category tag will be pushed down */
+  /* Truncation for recipe-origin if it gets too long */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Max 3 lines for origin/description */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: auto; /* Push category tag down if origin text is short */
+}
+
+/* Category tag styling */
+.recipe-category-tag {
+  display: inline-block;
+  align-self: flex-start; /* Keep it aligned to the start (left) */
+  background-color: #4CAF50; /* Your desired green for the tag */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: auto; /* THIS IS KEY: Pushes tag to the bottom of .recipe-description-block */
+}
+
+/* Specific adjustments when ingredients are showing */
+.recipe-description-block.showing-ingredients .recipe-category-tag {
+  /* Ensure tag is still pushed to bottom even if ingredients take up space */
+  margin-top: auto; 
+}
+.recipe-description-block.showing-ingredients .used-ingredients {
+   margin-bottom: 8px; /* Add some space between ingredients and category tag if both are present */
+}
+
+
+.view-recipe-btn {
+  /* ... your existing .view-recipe-btn styles ... */
+  /* Ensure margin-top is NOT auto here, as .recipe-description-block manages space above it */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 0; 
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block; 
+  width: 100%;
+}
+.view-recipe-btn:hover {
+    /* ... */
+}
