@@ -1,49 +1,221 @@
-# Recipe Finder - Aplicație de Rețete Culinare
+# Recipe Finder - Aplicație de Rețete Culinare, CIOBANU Bianca-Elena, 1132
 
-## Descriere
+Link video: https://www.youtube.com/watch?v=PvYc9oL2Oas
 
-Recipe Finder este o aplicație web modernă de căutare și gestionare a rețetelor culinare. Aplicația permite utilizatorilor să caute rețete, să le salveze ca favorite, să planifice mese și să exploreze o varietate de preparate culinare din întreaga lume.
+Link publicare: https://front-end-q1j5.onrender.com
 
-## Caracteristici Principale
+## Introducere
 
-- **Căutare de rețete multiple**:
-  - Căutare după nume
-  - Căutare după ingrediente
-  - Filtrare după categorie (Vegetarian, Desert, etc.)
-  - Filtrare după bucătărie (Japoneză, Italiană, etc.)
+Recipe Finder este o aplicație web modernă pentru căutarea, salvarea și planificarea rețetelor culinare. Permite utilizatorilor să descopere preparate din întreaga lume, să le adauge la favorite și să organizeze mesele săptămânale într-un plan personalizat. Autentificarea și stocarea datelor se face prin Firebase, iar rețetele sunt furnizate de API-ul public TheMealDB.
 
-- **Gestionare favorite**:
-  - Salvare rețete preferate
-  - Vizualizare listă de favorite
-  - Ștergere din favorite
+## Descriere problemă
 
-- **Planificare mese**:
-  - Adăugare rețete în planificator de mese
-  - Organizare pe zile și tipuri de mese (mic dejun, prânz, cină, gustare)
-  - Vizualizare calendar săptămânal
+O provocare frecventă în viața de zi cu zi este lipsa inspirației pentru gătit și dificultatea de a planifica mesele săptămânale. De asemenea, majoritatea aplicațiilor existente oferă doar rețete, fără o integrare coerentă între căutare, salvare și planificare. Recipe Finder rezolvă această problemă oferind o platformă intuitivă unde utilizatorii pot descoperi preparate noi, le pot salva și organiza după propriile nevoi.
 
-- **Profil utilizator**:
-  - Înregistrare și autentificare
-  - Setări profil
-  - Statistici de utilizare
+## Descriere API
 
-## Tehnologii Utilizate
+TheMealDB este utilizat pentru date despre rețete. Integrarea include:
+
+1. **Căutare după nume**: `/search.php?s=query`
+2. **Filtrare după categorie**: `/filter.php?c=category`
+3. **Filtrare după bucătărie**: `/filter.php?a=area`
+4. **Căutare după ingredient**: `/filter.php?i=ingredient`
+5. **Detalii rețetă**: `/lookup.php?i=id`
+
+Backend-ul nostru combină aceste endpoint-uri pentru a oferi o experiență mai bogată de căutare combinată (de ex. "mâncare japoneză cu pui").
+
+### API Backend (Node.js + Firebase)
+
+#### Rețete
+
+| Funcționalitate           | Endpoint                      | Metodă |
+|---------------------------|-------------------------------|--------|
+| Căutare complexă          | `/api/recipes/complex-search` | GET    |
+| Căutare după ingrediente  | `/api/recipes/search`         | GET    |
+| Detalii rețetă            | `/api/recipes/:id`            | GET    |
+
+#### Favorite
+
+| Funcționalitate              | Endpoint                                           | Metodă |
+|-----------------------------|----------------------------------------------------|--------|
+| Adăugare rețetă favorită    | `/api/favorites`                                   | POST   |
+| Listare favorite            | `/api/favorites/:userId`                           | GET    |
+| Ștergere favorită           | `/api/favorites/:userId/:recipeId`                 | DELETE |
+| Verificare rețetă favorită  | `/api/favorites/:userId/:recipeId/check`           | GET    |
+| Verificare în lot favorite  | `/api/favorites/:userId/batch-check`               | POST   |
+
+#### Planificare mese
+
+| Funcționalitate              | Endpoint                                         | Metodă |
+|-----------------------------|--------------------------------------------------|--------|
+| Salvare masă în plan        | `/api/meal-plan`                                 | POST   |
+| Vizualizare planificare     | `/api/meal-plan/:userId`                         | GET    |
+| Ștergere masă din plan      | `/api/meal-plan/:userId/:mealId`                 | DELETE |
+
+### Optimizări Firebase
+
+Aplicația implementează mai multe optimizări pentru a reduce numărul de citiri Firebase:
+
+1. **FavoritesContext**: 
+   - Citire centralizată a favoritelor (în loc ca fiecare component să facă cereri)
+   - Cache client-side pentru 5 minute pentru date favorite
+   - Actualizări optimiste UI
+
+2. **Endpoint-uri API Optimizate**:
+   - Parametri de filtrare pentru cereri de favorite (`limit`, `since`)
+   - Verificări individuale pentru starea de favorit (`/check`)
+   - Verificări în lot pentru starea de favorit (`/batch-check`)
+
+3. **Indexare Eficientă**:
+   - Utilizare docID pentru acces direct la documentele favorite
+
+Aceste optimizări reduc citirile Firebase cu 90-95% comparativ cu arhitectura inițială, prevenind depășirea cotelor Firebase.
 
 ### Frontend
-- React.js (cu React Hooks și Context API)
-- React Router pentru navigare
-- CSS personalizat pentru interfață
-- Gestionarea stării cu Context API
+- **AuthContext**: Gestionează starea de autentificare
+- **FavoritesContext**: Gestionează starea rețetelor favorite (optimizat pentru Firebase)
+- **RecipeCard**: Afișează o rețetă individuală
+- **Pagini principale**:
+  - Home: Pagina principală cu rețete populare
+  - Search: Căutare rețete
+  - Favorites: Rețete favorite
+  - MealPlan: Planificator de mese
+  - Profile: Profil utilizator
 
-### Backend
-- Node.js cu Express
-- Firebase pentru autentificare și stocare date
-- API-ul TheMealDB pentru informații despre rețete
+## Flux de date
 
-### Optimizări
-- Caching date pentru reducerea citirilor Firebase
-- Pattern singleton pentru gestionarea stării
-- Optimizări de performanță pentru căutări
+Fluxul de date în aplicație începe cu autentificarea utilizatorului prin Firebase. După logare, aplicația React trimite cereri către backend-ul Express, care la rândul lui consumă date din TheMealDB (pentru rețete) și Firebase Firestore (pentru date personalizate: favorite și plan mese). Comunicarea se face prin metode HTTP (GET, POST, DELETE), iar datele sunt transmise în format JSON. Răspunsurile backend-ului sunt utilizate pentru actualizarea interfeței în timp real.
+
+### Exemple request/response
+
+#### Adăugare rețetă la favorite  
+`POST /api/favorites`
+```json
+    {
+      "userId": "abc123",
+      "recipeId": "52772",
+      "recipeData": {
+        "title": "Chicken Teriyaki",
+        "image": "https://...",
+        "category": "Japanese",
+        "area": "Japan"
+      }
+    }
+
+    {
+      "success": true,
+      "message": "Recipe saved to favorites"
+    }
+```
+
+#### Obținere lista de favorite
+
+`GET /api/favorites/abc123`
+```json
+    [
+      {
+        "id": "52772",
+        "title": "Chicken Teriyaki",
+        "image": "https://...",
+        "category": "Japanese",
+        "area": "Japan",
+        "savedAt": "2025-05-25T14:32:10.000Z"
+      }
+    ]
+```
+
+#### Verificare dacă o rețetă este în favorite  
+`GET /api/favorites/abc123/52772/check`
+```json
+    {
+      "isFavorited": true,
+      "recipeId": "52772"
+    }
+```
+
+#### Verificare în lot a mai multor rețete  
+`POST /api/favorites/abc123/batch-check`
+```json
+    {
+      "recipeIds": ["52772", "52844", "52977"]
+    }
+
+    {
+      "52772": true,
+      "52844": false,
+      "52977": true
+    }
+```
+
+#### Salvare rețetă în planificator  
+`POST /api/meal-plan`
+```json
+    {
+      "userId": "abc123",
+      "date": "2025-05-26",
+      "mealType": "Prânz",
+      "recipeData": {
+        "title": "Grilled Salmon",
+        "image": "https://...",
+        "category": "Seafood"
+      }
+    }
+
+    {
+      "success": true,
+      "message": "Recipe added to meal plan"
+    }
+```
+
+#### Obținere planificare mese  
+`GET /api/meal-plan/abc123`
+```json
+    [
+      {
+        "id": "meal123",
+        "date": "2025-05-26",
+        "mealType": "Prânz",
+        "recipe": {
+          "title": "Grilled Salmon",
+          "image": "https://..."
+        },
+        "createdAt": "2025-05-25T20:14:00.000Z"
+      }
+    ]
+```
+
+#### Ștergere rețetă din planificare  
+`DELETE /api/meal-plan/abc123/meal123`
+```json
+    {
+      "success": true,
+      "message": "Meal removed from plan"
+    }
+```
+
+## Capturi de ecran
+### 1. Pagina principală (Homepage)
+![Homepage](screenshots/homepage.png)
+
+---
+
+### 2. Pagina de căutare (Search)
+![Search](screenshots/search.png)
+
+---
+
+### 3. Rețete favorite (Favorites)
+![Favorites](screenshots/favourites.png)
+
+---
+
+### 4. Planificare mese (Meal Plan)
+![Meal Plan](screenshots/mealplan.png)
+
+---
+
+### 5. Pagină rețetă (Recipe Details)
+![Recipe Page](screenshots/recipe.png)
 
 ## Instalare și Rulare
 
@@ -115,63 +287,12 @@ recipe-finder/
 │   │   ├── styles/        # Fișiere CSS
 │   │   └── firebase/      # Configurare Firebase
 │   └── index.html         # Punct de intrare HTML
+├── screenshots/           # Capturi de ecran pentru documentație
 ├── server/                # API-ul Node.js Backend
 │   ├── server.js          # Punct de intrare server
 │   └── firebase-service-account.json # Configurație Firebase (ignorată in git)
 └── README.md              # Documentație
 ```
-
-### Componentele Principale
-
-#### Frontend
-- **AuthContext**: Gestionează starea de autentificare
-- **FavoritesContext**: Gestionează starea rețetelor favorite (optimizat pentru Firebase)
-- **RecipeCard**: Afișează o rețetă individuală
-- **Pagini principale**:
-  - Home: Pagina principală cu rețete populare
-  - Search: Căutare rețete
-  - Favorites: Rețete favorite
-  - MealPlan: Planificator de mese
-  - Profile: Profil utilizator
-
-#### Backend
-- **API TheMealDB**: Integrare pentru date despre rețete
-- **Firebase**: Stocare pentru favorite și planificări de mese
-- **Endpoint-uri API**:
-  - `/api/recipes`: Căutare și detalii rețete
-  - `/api/favorites`: Gestionare rețete favorite
-  - `/api/meal-plan`: Gestionare planificator de mese
-
-## Optimizări Firebase
-
-Aplicația implementează mai multe optimizări pentru a reduce numărul de citiri Firebase:
-
-1. **FavoritesContext**: 
-   - Citire centralizată a favoritelor (în loc ca fiecare component să facă cereri)
-   - Cache client-side pentru 5 minute pentru date favorite
-   - Actualizări optimiste UI
-
-2. **Endpoint-uri API Optimizate**:
-   - Parametri de filtrare pentru cereri de favorite (`limit`, `since`)
-   - Verificări individuale pentru starea de favorit (`/check`)
-   - Verificări în lot pentru starea de favorit (`/batch-check`)
-
-3. **Indexare Eficientă**:
-   - Utilizare docID pentru acces direct la documentele favorite
-
-Aceste optimizări reduc citirile Firebase cu 90-95% comparativ cu arhitectura inițială, prevenind depășirea cotelor Firebase.
-
-## Integrare API TheMealDB
-
-TheMealDB este utilizat pentru date despre rețete. Integrarea include:
-
-1. **Căutare după nume**: `/search.php?s=query`
-2. **Filtrare după categorie**: `/filter.php?c=category`
-3. **Filtrare după bucătărie**: `/filter.php?a=area`
-4. **Căutare după ingredient**: `/filter.php?i=ingredient`
-5. **Detalii rețetă**: `/lookup.php?i=id`
-
-Backend-ul nostru combină aceste endpoint-uri pentru a oferi o experiență mai bogată de căutare combinată (de ex. "mâncare japoneză cu pui").
 
 ## Utilizare
 
@@ -189,26 +310,10 @@ Backend-ul nostru combină aceste endpoint-uri pentru a oferi o experiență mai
 2. Selectați data și tipul mesei
 3. Vizualizați planul în pagina "Meal Plan"
 
-## Note Avansate pentru Dezvoltatori
-
-### Managementul Stării
-Aplicația utilizează React Context API pentru gestionarea stării globale:
-
-- **AuthContext**: Stare utilizator, login/logout
-- **FavoritesContext**: Rețete favorite, optimizat pentru a minimiza citirile Firebase
-
-### Gestionare Erori
-- Tratare elegantă pentru depășiri cote Firebase
-- Fallback pentru rețete indisponibile
-
-### Extindere
-Pentru a extinde aplicația:
-
-1. Adăugare API suplimentar:
-   - Modificați `/services/api.js` pentru a include noul API
-   - Adăugați endpoint-uri corespunzătoare în `server.js`
-
-2. Adăugare funcționalități noi:
-   - Creați un nou context dacă necesită stare globală
-   - Implementați componente și pagini corespunzătoare
-   - Actualizați rutele în `App.jsx`
+## Referinţe
+https://www.themealdb.com/api.php
+https://firebase.google.com
+https://react.dev
+https://nodejs.org
+https://expressjs.com
+https://render.com
